@@ -1,5 +1,12 @@
 import { pathMessage } from '../path-message/path-message.js';
 import { up, cd, ls } from '../navigation/navigation.js';
+import {
+  getArchitecture,
+  getCpus,
+  getEol,
+  getHomeDir,
+  getUsername,
+} from '../os/os.js';
 import os from 'os';
 
 const startProgram = async () => {
@@ -24,6 +31,36 @@ const startProgram = async () => {
       pathMessage(currentPath);
     } else if (txt.toString() === 'ls\r\n' || txt.toString() === 'ls\n') {
       ls(currentPath);
+      pathMessage(currentPath);
+    } else if (
+      txt.toString() === 'os --EOL\r\n' ||
+      txt.toString() === 'os --EOL\n'
+    ) {
+      getEol();
+      pathMessage(currentPath);
+    } else if (
+      txt.toString() === 'os --cpus\r\n' ||
+      txt.toString() === 'os --cpus\n'
+    ) {
+      getCpus();
+      pathMessage(currentPath);
+    } else if (
+      txt.toString() === 'os --homedir\r\n' ||
+      txt.toString() === 'os --homedir\n'
+    ) {
+      getHomeDir();
+      pathMessage(currentPath);
+    } else if (
+      txt.toString() === 'os --username\r\n' ||
+      txt.toString() === 'os --username\n'
+    ) {
+      getUsername();
+      pathMessage(currentPath);
+    } else if (
+      txt.toString() === 'os --architecture\r\n' ||
+      txt.toString() === 'os --architecture\n'
+    ) {
+      getArchitecture();
       pathMessage(currentPath);
     } else console.error('Invalid input');
   });
