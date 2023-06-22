@@ -8,6 +8,14 @@ import {
   getUsername,
 } from '../os/os.js';
 import os from 'os';
+import {
+  cat,
+  add,
+  rn,
+  cp,
+  mv,
+  rm,
+} from '../file-operations/file-operations.js';
 
 const startProgram = async () => {
   let currentPath = os.homedir();
@@ -61,6 +69,39 @@ const startProgram = async () => {
       txt.toString() === 'os --architecture\n'
     ) {
       getArchitecture();
+      pathMessage(currentPath);
+    } else if (txt.toString().slice(0, 4) === 'cat ') {
+      const filePath = txt.toString().slice(4, txt.toString().length);
+      const cleanFilePath = filePath.replace(/\n/g, '').replace(/\r/g, '');
+      await cat(currentPath, cleanFilePath);
+      pathMessage(currentPath);
+    } else if (txt.toString().slice(0, 4) === 'add ') {
+      const filePath = txt.toString().slice(4, txt.toString().length);
+      const cleanFilePath = filePath.replace(/\n/g, '').replace(/\r/g, '');
+      await add(currentPath, cleanFilePath);
+      pathMessage(currentPath);
+    } else if (txt.toString().slice(0, 3) === 'rn ') {
+      const filePath = txt.toString().slice(3, txt.toString().length);
+      const cleanFilePath = filePath.replace(/\n/g, '').replace(/\r/g, '');
+      const arrPath = cleanFilePath.split(' ');
+      await rn(currentPath, arrPath[0], arrPath[1]);
+      pathMessage(currentPath);
+    } else if (txt.toString().slice(0, 3) === 'cp ') {
+      const filePath = txt.toString().slice(3, txt.toString().length);
+      const cleanFilePath = filePath.replace(/\n/g, '').replace(/\r/g, '');
+      const arrPath = cleanFilePath.split(' ');
+      await cp(currentPath, arrPath[0], arrPath[1]);
+      pathMessage(currentPath);
+    } else if (txt.toString().slice(0, 3) === 'mv ') {
+      const filePath = txt.toString().slice(3, txt.toString().length);
+      const cleanFilePath = filePath.replace(/\n/g, '').replace(/\r/g, '');
+      const arrPath = cleanFilePath.split(' ');
+      await mv(currentPath, arrPath[0], arrPath[1]);
+      pathMessage(currentPath);
+    } else if (txt.toString().slice(0, 3) === 'rm ') {
+      const filePath = txt.toString().slice(3, txt.toString().length);
+      const cleanFilePath = filePath.replace(/\n/g, '').replace(/\r/g, '');
+      await rm(currentPath, cleanFilePath);
       pathMessage(currentPath);
     } else console.error('Invalid input');
   });

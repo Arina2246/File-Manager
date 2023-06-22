@@ -1,5 +1,5 @@
 import path from 'path';
-import fs, { stat } from 'fs';
+import fs from 'fs';
 
 export const up = (currentPath) => {
   return path.dirname(currentPath);
@@ -7,7 +7,7 @@ export const up = (currentPath) => {
 
 export const cd = async (currentPath, pathToGo) => {
   if (path.isAbsolute(pathToGo)) {
-    let result = currentPath;
+    let result = pathToGo;
     await fs.promises
       .access(pathToGo)
       .then(() => pathToGo)
