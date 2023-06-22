@@ -16,6 +16,8 @@ import {
   mv,
   rm,
 } from '../file-operations/file-operations.js';
+import { hash } from '../hash/hash.js';
+import { compress, decompress } from '../br/br.js';
 
 const startProgram = async () => {
   let currentPath = os.homedir();
@@ -102,6 +104,23 @@ const startProgram = async () => {
       const filePath = txt.toString().slice(3, txt.toString().length);
       const cleanFilePath = filePath.replace(/\n/g, '').replace(/\r/g, '');
       await rm(currentPath, cleanFilePath);
+      pathMessage(currentPath);
+    } else if (txt.toString().slice(0, 5) === 'hash ') {
+      const filePath = txt.toString().slice(5, txt.toString().length);
+      const cleanFilePath = filePath.replace(/\n/g, '').replace(/\r/g, '');
+      await hash(currentPath, cleanFilePath);
+      pathMessage(currentPath);
+    } else if (txt.toString().slice(0, 9) === 'compress ') {
+      const filePath = txt.toString().slice(9, txt.toString().length);
+      const cleanFilePath = filePath.replace(/\n/g, '').replace(/\r/g, '');
+      const arrPath = cleanFilePath.split(' ');
+      await compress(currentPath, arrPath[0], arrPath[1]);
+      pathMessage(currentPath);
+    } else if (txt.toString().slice(0, 11) === 'decompress ') {
+      const filePath = txt.toString().slice(11, txt.toString().length);
+      const cleanFilePath = filePath.replace(/\n/g, '').replace(/\r/g, '');
+      const arrPath = cleanFilePath.split(' ');
+      await decompress(currentPath, arrPath[0], arrPath[1]);
       pathMessage(currentPath);
     } else console.error('Invalid input');
   });
